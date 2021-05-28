@@ -1,4 +1,4 @@
 ﻿namespace PriceCalculatorKata
 {
-    record Cost(decimal Amount, string Description);
+    record Cost(Money Amount, string Description);
 }

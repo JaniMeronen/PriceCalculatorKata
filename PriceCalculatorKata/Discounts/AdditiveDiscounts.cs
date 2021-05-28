@@ -2,6 +2,6 @@
 {
     record AdditiveDiscounts(Discount First, Discount Second) : Discount
     {
-        public override decimal Apply(Product product) => First.Apply(product) + Second.Apply(product);
+        public override Money Apply(Product product) => First.Apply(product) + Second.Apply(product);
     }
 }

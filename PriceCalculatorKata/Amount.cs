@@ -2,6 +2,6 @@
 {
     abstract record Amount
     {
-        public abstract decimal Calculate(decimal price);
+        public abstract Money Calculate(Money price);
     }
 }

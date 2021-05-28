@@ -2,6 +2,6 @@
 {
     abstract record Discount
     {
-        public abstract decimal Apply(Product product);
+        public abstract Money Apply(Product product);
     }
 }

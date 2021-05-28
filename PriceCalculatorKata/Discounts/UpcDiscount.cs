@@ -1,9 +1,7 @@
-﻿using static PriceCalculatorKata.Common.PercentageCalculator;
-
-namespace PriceCalculatorKata.Discounts
+﻿namespace PriceCalculatorKata.Discounts
 {
     record UpcDiscount(int Percentage, int Upc) : Discount
     {
-        public override decimal Apply(Product product) => product.Upc == Upc ? Calculate(product.Price, Percentage) : 0M;
+        public override Money Apply(Product product) => product.Upc == Upc ? product.Price.Scale(Percentage) : product.Price.Zero;
     }
 }

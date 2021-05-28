@@ -2,7 +2,7 @@
 {
     record MultiplicativeDiscounts(Discount First, Discount Second) : Discount
     {
-        public override decimal Apply(Product product)
+        public override Money Apply(Product product)
         {
             var firstDiscountAmount = First.Apply(product);
             var discountedPrice = product.Price - firstDiscountAmount;

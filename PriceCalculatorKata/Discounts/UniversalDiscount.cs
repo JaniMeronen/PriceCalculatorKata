@@ -1,9 +1,7 @@
-﻿using static PriceCalculatorKata.Common.PercentageCalculator;
-
-namespace PriceCalculatorKata.Discounts
+﻿namespace PriceCalculatorKata.Discounts
 {
     record UniversalDiscount(int Percentage) : Discount
     {
-        public override decimal Apply(Product product) => Calculate(product.Price, Percentage);
+        public override Money Apply(Product product) => product.Price.Scale(Percentage);
     }
 }

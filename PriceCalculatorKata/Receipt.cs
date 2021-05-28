@@ -2,5 +2,5 @@
 
 namespace PriceCalculatorKata
 {
-    record Receipt(decimal Cost, decimal Discounts, IEnumerable<Cost> Costs, decimal Tax, decimal Total);
+    record Receipt(Money Cost, Money Discounts, IEnumerable<Cost> Costs, Money Tax, Money Total);
 }

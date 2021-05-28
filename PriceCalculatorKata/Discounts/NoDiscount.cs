@@ -2,6 +2,6 @@
 {
     record NoDiscount : Discount
     {
-        public override decimal Apply(Product product) => 0M;
+        public override Money Apply(Product product) => product.Price.Zero;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace PriceCalculatorKata.Amounts
 {
-    record AbsoluteAmount(decimal Value) : Amount
+    record AbsoluteAmount(Money Value) : Amount
     {
-        public override decimal Calculate(decimal price) => Value;
+        public override Money Calculate(Money price) => Value;
     }
 }
