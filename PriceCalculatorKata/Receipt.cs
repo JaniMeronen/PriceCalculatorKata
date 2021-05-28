@@ -1,4 +1,6 @@
-﻿namespace PriceCalculatorKata
+﻿using System.Collections.Generic;
+
+namespace PriceCalculatorKata
 {
-    record Receipt(decimal DiscountAmount, decimal PriceAfter, decimal PriceBefore, decimal TaxAmount);
+    record Receipt(decimal Cost, decimal Discounts, IEnumerable<Cost> Costs, decimal Tax, decimal Total);
 }

@@ -1,19 +1,22 @@
-﻿using PriceCalculatorKata.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
 using static PriceCalculatorKata.Common.PercentageCalculator;
 
 namespace PriceCalculatorKata
 {
     record Product(string Name, decimal Price, int Upc)
     {
-        public Receipt CreateReceipt(Discount afterTaxDiscount, Discount beforeTaxDiscount, int tax)
+        public Receipt CreateReceipt(Discount afterTaxDiscount, Discount beforeTaxDiscount, IEnumerable<Expense> expenses, int tax)
         {
-            var beforeTaxDiscountAmount = beforeTaxDiscount.Apply(this).Round(2);
+            var beforeTaxDiscountAmount = beforeTaxDiscount.Apply(this);
             var discountedProduct = this with { Price = Price - beforeTaxDiscountAmount };
-            var taxAmount = Calculate(Price - beforeTaxDiscountAmount, tax).Round(2);
-            var afterTaxDiscountAmount = afterTaxDiscount.Apply(discountedProduct).Round(2);
-            var discountAmount = (beforeTaxDiscountAmount + afterTaxDiscountAmount).Round(2);
-            var priceAfter = (Price + taxAmount - discountAmount).Round(2);
-            return new(discountAmount, priceAfter, Price, taxAmount);
+            var taxAmount = Calculate(Price - beforeTaxDiscountAmount, tax);
+            var afterTaxDiscountAmount = afterTaxDiscount.Apply(discountedProduct);
+            var discountAmount = beforeTaxDiscountAmount + afterTaxDiscountAmount;
+            var costs = expenses.Select(expense => expense.CalculateCost(Price));
+            var expensesAmount = costs.Aggregate(0M, (total, expense) => total + expense.Amount);
+            var total = Price + taxAmount - discountAmount + expensesAmount;
+            return new(Price, discountAmount, costs, taxAmount, total);
         }
     }
 }
