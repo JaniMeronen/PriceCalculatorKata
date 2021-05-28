@@ -7,15 +7,17 @@ using static System.Console;
 var sample = new Product("The Little Prince", 20.25M, 12345);
 var universalDiscount = new UniversalDiscount(15);
 var upcDiscount = new UpcDiscount(7, 12345);
-var afterTaxDiscount = new MultiplicativeDiscounts(universalDiscount, upcDiscount);
+var afterTaxDiscount = new AdditiveDiscounts(universalDiscount, upcDiscount);
+
+var cap = new RelativeAmount(30);
 
 var expenses = new Expense[]
 {
-    new(new RelativeAmount(1), "Packaging"),
-    new(new AbsoluteAmount(2.2M), "Transport")
+    //new(new RelativeAmount(1), "Packaging"),
+    //new(new AbsoluteAmount(2.2M), "Transport")
 };
 
-var receipt = sample.CreateReceipt(afterTaxDiscount, new NoDiscount(), expenses, 21);
+var receipt = sample.CreateReceipt(afterTaxDiscount, new NoDiscount(), cap, expenses, 21);
 WriteLine($"Cost = ${receipt.Cost.Round(2)}");
 WriteLine($"Tax = ${receipt.Tax.Round(2)}");
 if (receipt.Discounts > 0M) WriteLine($"Discounts = ${receipt.Discounts.Round(2)}");
