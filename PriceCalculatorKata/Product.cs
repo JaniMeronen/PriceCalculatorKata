@@ -5,10 +5,13 @@ namespace PriceCalculatorKata
 {
     record Product(string Name, decimal Price, int Upc)
     {
-        public Receipt CreateReceipt(Discount discount, int tax)
+        public Receipt CreateReceipt(Discount afterTaxDiscount, Discount beforeTaxDiscount, int tax)
         {
-            var discountAmount = discount.Apply(this).Round(2);
-            var taxAmount = Calculate(Price, tax).Round(2);
+            var beforeTaxDiscountAmount = beforeTaxDiscount.Apply(this).Round(2);
+            var discountedProduct = this with { Price = Price - beforeTaxDiscountAmount };
+            var taxAmount = Calculate(Price - beforeTaxDiscountAmount, tax).Round(2);
+            var afterTaxDiscountAmount = afterTaxDiscount.Apply(discountedProduct).Round(2);
+            var discountAmount = (beforeTaxDiscountAmount + afterTaxDiscountAmount).Round(2);
             var priceAfter = (Price + taxAmount - discountAmount).Round(2);
             return new(discountAmount, priceAfter, Price, taxAmount);
         }
