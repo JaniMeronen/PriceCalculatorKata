@@ -1,4 +1,4 @@
-﻿namespace PriceCalculatorKata
+﻿namespace PriceCalculatorKata.Common
 {
     static class DecimalExtensions
     {
